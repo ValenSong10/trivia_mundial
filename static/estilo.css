@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #dff1ff;
+    text-align: center;
+}
+
+.caja {
+    background-color: white;
+    width: 60%;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+button {
+    background-color: #0077cc;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    margin: 10px;
+    font-size: 18px;
+}
