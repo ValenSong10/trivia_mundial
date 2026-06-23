@@ -5,22 +5,29 @@
     <link rel="stylesheet" href="/static/estilo.css">
 </head>
 <body>
+
     <div class="caja">
+
         <h2>Pregunta {{ numero }} de {{ total }}</h2>
 
         <h1>{{ pregunta }}</h1>
 
         <form method="POST">
+
             {% for opcion in opciones %}
-                <label>
-                    <input type="radio" name="respuesta" value="{{ opcion }}" required>
-                    {{ opcion }}
-                </label>
-                <br>
+            <label>
+                <input type="radio" name="respuesta" value="{{ opcion }}" required>
+                {{ opcion }}
+            </label>
             {% endfor %}
 
+            <br>
+
             <button type="submit">Responder</button>
+
         </form>
+
     </div>
+
 </body>
 </html>
