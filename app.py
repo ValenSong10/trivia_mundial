@@ -12,7 +12,7 @@ preguntas = [
     ("¿Qué selección ganó el Mundial 2018?", ["Francia", "Croacia", "Argentina", "España"], "Francia"),
     ("¿Qué países serán sede del Mundial 2026?", ["Argentina, Brasil y Uruguay", "Estados Unidos, México y Canadá", "España, Portugal y Marruecos", "Italia, Francia y Alemania"], "Estados Unidos, México y Canadá"),
     ("¿Cuántas selecciones participarán en el Mundial 2026?", ["32", "40", "48", "64"], "48"),
-    ("¿Qué jugador español hizo un gol en la final del Mundial 2010?", ["Andrés Iniesta", "Xavi Hernandez", "Carles Puyol", "Sergio Ramos"], "Andrés Iniesta"),
+    ("¿Qué jugador español hizo un gol en la final del Mundial 2010?", ["Andrés Iniesta", "Xavi Hernández", "Carles Puyol", "Sergio Ramos"], "Andrés Iniesta"),
     ("¿Qué selección perdió la final del Mundial 1986 contra Argentina?", ["Alemania", "Brasil", "Croacia", "Países Bajos"], "Alemania"),
     ("¿Quién hizo el famoso gol de Palomita en Brasil 2014?", ["David Villa", "Cristiano Ronaldo", "Wayne Rooney", "Van Persie"], "Van Persie"),
     ("¿Qué país ganó el primer Mundial de fútbol en 1930?", ["Uruguay", "Argentina", "Italia", "Brasil"], "Uruguay")
@@ -29,6 +29,7 @@ def inicio():
 
 @app.route("/pregunta", methods=["GET", "POST"])
 def pregunta():
+
     if request.method == "POST":
         respuesta = request.form["respuesta"]
         correcta = session["correcta"]
@@ -44,15 +45,23 @@ def pregunta():
         return redirect(url_for("resultado"))
 
     texto, opciones, correcta = preguntas[numero]
+
     opciones_copia = opciones[:]
     shuffle(opciones_copia)
 
     session["correcta"] = correcta
 
-    return render_template("pregunta.html", pregunta=texto, opciones=opciones_copia, numero=numero + 1, total=len(preguntas))
+    return render_template(
+        "pregunta.html",
+        pregunta=texto,
+        opciones=opciones_copia,
+        numero=numero + 1,
+        total=len(preguntas)
+    )
 
 @app.route("/resultado")
 def resultado():
+
     puntaje = session["puntaje"]
     total = len(preguntas)
     porcentaje = (puntaje / total) * 100
@@ -64,7 +73,13 @@ def resultado():
     else:
         mensaje = "Podés hacerlo mejor, ¡seguí intentando!"
 
-    return render_template("resultado.html", puntaje=puntaje, total=total, porcentaje=porcentaje, mensaje=mensaje)
+    return render_template(
+        "resultado.html",
+        puntaje=puntaje,
+        total=total,
+        porcentaje=round(porcentaje, 1),
+        mensaje=mensaje
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
